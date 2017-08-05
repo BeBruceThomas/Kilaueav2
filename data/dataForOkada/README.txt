@@ -1,0 +1,11 @@
+E      
+N     
+Z  
+strike    
+dip   
+length   
+width   
+rake    
+slip  
+opening     
+nu
