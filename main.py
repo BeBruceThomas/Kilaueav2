@@ -7,6 +7,7 @@ Kilauea_Project
 
 """
 Main Program 
+Run in Console 
 """
 
 
@@ -14,7 +15,6 @@ Main Program
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy
 
 
 # Get all the files in the current working directory: optionnal, just to check if the directory is the good one 
@@ -34,12 +34,6 @@ from scripts.annex import Annex
 annex = Annex("annex")
 from scripts.geographic import Geographic
 geo = Geographic("geographic")
-"""
-from scripts.okadaClawpack import OkadaCLAWPACK
-okaC = OkadaCLAWPACK("okadaCLAWPACK")
-"""
-from scripts.okadaDC3D import OkadaDC3D
-okaD = OkadaDC3D("okadaDC3D")
 
 
 # Choose the path to access data: have to find a solution to change only in the main only or directly emter in the interface 
@@ -50,12 +44,14 @@ path = "/gps/Bruce/Kilaueav2"
 from data import rtv
 # Load BI_linefile
 from data import bi
-# Load dataForOkada
-from data import dataForOkada
+
+
+
 
 
 # Main program : all the run is done here
 if __name__ == "__main__":
+    
     
     #--------------------------------------------------------------------------
     # GPS station : ids and dates 
@@ -263,7 +259,7 @@ if __name__ == "__main__":
     
     
     #--------------------------------------------------------------------------
-    # Fit an Okada : surface deformation due to a finite rectangular source.
+    # First Part of Okada.
     #--------------------------------------------------------------------------
     
     
@@ -316,57 +312,4 @@ if __name__ == "__main__":
     f_errZ = open("data/site_neu/site_neu_errZ.dat", "w")
     for i in range(len_isN):
         f_errZ.write(str(site_neu_err[2][i]) + "\n")
-    f_errZ.close() 
-    
-    
-    # Okada parameters
-    upper_boundsA = dataForOkada.okada_initial_params[0]
-    okada_startA  = dataForOkada.okada_initial_params[1]
-    lower_boundsA = dataForOkada.okada_initial_params[2]
-    len_bounds = len(okada_startA)
-    upper_bounds = np.zeros((1, len_bounds))
-    okada_start = np.zeros((1, len_bounds))
-    lower_bounds = np.zeros((1, len_bounds))
-    for i in range(len_bounds):
-        upper_bounds[0][i] = upper_boundsA[i]
-        okada_start[0][i] = okada_startA[i]
-        lower_bounds[0][i] = lower_boundsA[i]
-    
-    """
-    # Create a sample fault and print out some information about it: use of CLAWPACK version for Okada.
-    fault, subfault = okaC.set_params(okada_start)
-    print ("This sample fault has %s meter of slip over a %s by %s km patch" % (subfault.slip,subfault.length/1e3,subfault.width/1e3))
-    print ("With shear modulus %4.1e Pa the seismic moment is %4.1e" % (subfault.mu, subfault.Mo()))
-    print ("   corresponding to an earthquake with moment magnitude %s" % fault.Mw())
-    print ("The depth at the top edge of the fault plane is %s km" % (subfault.depth/1e3)) 
-    """
-    
-    # Fit an okada to the data
-    [okada_params, fval, exit_flag, num_func] = scipy.optimize.fminbound('oka.okada_SWRZ_fit', lower_bounds, upper_bounds)
-    """
-    #[okada_params,resnorm,residual,exitflag] =  lsqnonlin('okada_SWRZ_fit',okada_start,lower_bounds,upper_bounds);
-    options = optimset('fminsearch');
-    [okada_params,resnorm,exitflag,output] =  fminsearchbnd('okada_SWRZ_fit',okada_start,lower_bounds,upper_bounds,options);
-    """
-    
-    
-    nsite = len(site_neu_err[0])
-    calc_slip = np.zeros((1, nsite))
-    for isite in range(nsite):
-        site_slip = okaD.calc_SWZR_okada(okada_params, site_neu_posn)
-        calc_slip[0][isite] = site_slip
-                
-    
-    """
-    h_okada_vert=quiver(sitex-x0,sitey-y0,0*stepE',calc_slip(3,:)',1)
-    h_okada_horiz=quiver(sitex-x0,sitey-y0,calc_slip(2,:)',calc_slip(1,:)',1)
-    set(h_okada_horiz,'Color','k')
-    set(h_okada_vert,'Color',[.7 .7 .7])
-    """
-     
-    
-    
-    
-    
-    
-    
+    f_errZ.close()

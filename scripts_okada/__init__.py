@@ -1,3 +1,3 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import Kilaueav2.data
+import scripts_okada
