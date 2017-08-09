@@ -86,7 +86,38 @@ site_neu_errZ.close()
 
 
 
-   
+def okada_SWZR_fit():
+    """
+    Evaluates the misfit of an okada solution defined by the passed parameters to the slip (and errors) globally defined.
+    """
+    
+    nsite = len(site_neu_err[0])
+    
+    slip_weights = np.zeros((3, nsite))
+    for i in range(3):
+        for j in range(nsite):
+            slip_weights[i][j] = 1 / (site_neu_err[i][j]**2)
+    
+    # only for z first
+    calc_slip = np.zeros((3, nsite))
+    slip_misfit = np.zeros((3, nsite))
+    
+    for i in range(3):
+        for j in range(nsite):
+            site_slip = calc_SWZR_okada(dataForOkada.okada_start, site_neu_posn)
+            calc_slip[i][j] = site_slip
+            slip_misfit[i][j] = site_neu_slip[i][j] - calc_slip[i][j]
+    
+    misfit = np.zeros((1, nsite))
+    
+    for isite in range(15):            
+        misfit[0][isite] = slip_misfit[0][isite] * slip_weights[2][isite] / (sum(slip_weights[2]))
+    return misfit 
+
+
+
+
+  
 def get_params():
     """
     """
@@ -138,34 +169,7 @@ def test_dc3d():
     plt.show()
 
 
-def okada_SWZR_fit():
-    """
-    Evaluates the misfit of an okada solution defined by the passed parameters to the slip (and errors) globally defined.
-    """
-    
-    nsite = len(site_neu_err[0])
-    
-    slip_weights = np.zeros((3, nsite))
-    for i in range(3):
-        for j in range(nsite):
-            slip_weights = 1 / (site_neu_err[i][j]**2)
-    
-    # only for z first
-    calc_slip = np.zeros((3, nsite))
-    slip_misfit = np.zeros((3, nsite))
-    
-    for i in range(3):
-        for j in range(nsite):
-            site_slip = calc_SWZR_okada(dataForOkada.okada_start, site_neu_posn)
-            calc_slip[i][j] = site_slip
-            slip_misfit[i][j] = site_neu_slip[i][j] - calc_slip[i][j]
-    
-    misfit = np.zeros((1, nsite))
-    
-    for isite in range(nsite):            
-        misfit[0][isite] = slip_misfit[0][isite] * slip_weights[2][isite] / (sum(slip_weights[2]))
-    
-    return misfit
+
     
     
 
