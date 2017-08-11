@@ -14,6 +14,7 @@ Run in Console
 # Moduls imported
 import os
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -36,36 +37,80 @@ from data import coords
 # Main program : all the run is done here
 if __name__ == "__main__":
     
-    #--------------------------------------------------------------------------
-    # View in 3D.
-    #--------------------------------------------------------------------------    
     
+    #--------------------------------------------------------------------------
+    # View in 3D: color for each year.
+    #--------------------------------------------------------------------------    
+
+    """
+    try only the faults to see something 
+    put the lines to join 
+    """
+    
+    fig1 = plt.figure()
+    ax1 = fig1.add_subplot(111, projection='3d')
+        
+    # Loop on each site
+    for year in range(coords.len_mYears):                
+                       
+        x = coords.mYears[year][1]
+        y = coords.mYears[year][2]
+        z = coords.mYears[year][3]
+        
+        cmap = mpl.cm.autumn
+        ax1.scatter(x, y, z, c=cmap(year / float(coords.len_mYears)), marker='o')
+        
+        #ax.scatter(xt, yt, zt, c='b', marker='^')
+        
+    ax1.set_xlabel('X Label')
+    ax1.set_ylabel('Y Label')
+    ax1.set_zlabel('Z Label')
+        
+   
+    #--------------------------------------------------------------------------
+    # View in 3D: color for each site.
+    #--------------------------------------------------------------------------  
+    
+    """
+    can also do it only for each site, have to put orientation
+    """
+    
+    fig2 = plt.figure()
+    ax2 = fig2.add_subplot(111, projection='3d')
+        
     # Loop on each site
     for site in range(1, 67):                
-                
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-        
+                       
         x = coords.se['se_%02d' % site][1]
         y = coords.se['se_%02d' % site][2]
         z = coords.se['se_%02d' % site][3]
-               
-        ax.scatter(x, y, z, c='r', marker='o')
         
-        ax.set_xlabel('X Label')
-        ax.set_ylabel('Y Label')
-        ax.set_zlabel('Z Label')
+        cmap = mpl.cm.autumn
+        ax2.scatter(x, y, z, c=cmap(site / float(67)), marker='o')
         
-        plt.show()
+        #ax.scatter(xt, yt, zt, c='b', marker='^')
+        
+    ax2.set_xlabel('X Label')
+    ax2.set_ylabel('Y Label')
+    ax2.set_zlabel('Z Label')
     
-
 
     #--------------------------------------------------------------------------
-    # Distance from line.
+    # Cumulative Distance from line.
     #--------------------------------------------------------------------------    
     
-    # Define line going North (coudl also do 2 different following sites in general EW)
+    # Define line going North (could also do 2 different following sites in general EW)
     # North line based on k001 latitude
+    
+    
+
+
+    
+    plt.show()
+    
+
+
+
     
     
     
