@@ -11,17 +11,16 @@ Run in Terminal
 """
 
 
-# Get all the files in the current working directory: optionnal, just to check if the directory is the good one 
+import os
 cwd = os.getcwd()
 files = os.listdir(cwd)
 print("Files in '%s': %s" % (cwd, files))
 
 
 # Moduls imported
-import os
 import numpy as np
 import matplotlib.pyplot as plt
-from okada_wrapper.okada_wrapper import dc3d0wrapper, dc3dwrapper
+from scripts_okada.okada_wrapper.okada_wrapper import dc3d0wrapper, dc3dwrapper
 """
 # nead scipy version 0.11.0 at least, not possible to use here because version 0.9.0 and upgrade doesn't work
 import scipy 
@@ -158,17 +157,17 @@ def calc_SWZR_okada(okada_params, site_neu):
 def get_params():
     """
     """
-    poisson_ratio = dataForOkada.okada_start[10]
+    poisson_ratio = okada_start[10]
     mu = 30
     lmda = (2 * mu * poisson_ratio) / (1 - 2 * poisson_ratio)
     alpha = (lmda + mu) / (lmda + 2 * mu)
     
-    x0 = [ dataForOkada.okada_start[0], dataForOkada.okada_start[1], - dataForOkada.okada_start[2] ]
-    depth = dataForOkada.okada_start[2]
-    dip = dataForOkada.okada_start[4]
-    strike_width = [ -dataForOkada.okada_start[5]/2, dataForOkada.okada_start[5]/2 ]
-    dip_width = [ -dataForOkada.okada_start[6]/2, dataForOkada.okada_start[6]/2 ]
-    dislocation = [ dataForOkada.okada_start[7], dataForOkada.okada_start[8], dataForOkada.okada_start[9] ]
+    x0 = [ okada_start[0], okada_start[1], - okada_start[2] ]
+    depth = okada_start[2]
+    dip = okada_start[4]
+    strike_width = [ -okada_start[5]/2, okada_start[5]/2 ]
+    dip_width = [ -okada_start[6]/2, okada_start[6]/2 ]
+    dislocation = [ okada_start[7], okada_start[8], okada_start[9] ]
     
     return alpha, x0, depth, dip, strike_width, dip_width, dislocation
 
@@ -177,12 +176,13 @@ def test_dc3d():
     """
     alpha, x0, depth, dip, strike_width, dip_width, dislocation = get_params()
     n = [100, 100]
-    x = np.linspace(dataForOkada.lower_bounds[0], dataForOkada.upper_bounds[0], n[0])
-    y = np.linspace(dataForOkada.lower_bounds[1], dataForOkada.upper_bounds[1], n[1])
+    x = np.linspace(lower_bounds[0], upper_bounds[0], n[0])
+    y = np.linspace(lower_bounds[1], upper_bounds[1], n[1])
     ux = np.zeros((n[0], n[1]))
     for i in range(n[0]):
         for j in range(n[1]):
-            success, u, grad_u = dc3dwrapper(alpha, [x[i], y[j], x0[2]],
+            success, u, grad_u = dc3dwrapper(alpha, 
+                                             [x[i], y[j], - 1.0],
                                              depth, 
                                              dip,
                                              strike_width, 
@@ -198,9 +198,9 @@ def test_dc3d():
     plt.xlabel('x')
     plt.ylabel('y')
     cbar = plt.colorbar(cntrf)
-    tick_locator = plt.ticker.MaxNLocator(nbins=5)
-    cbar.locator = tick_locator
-    cbar.update_ticks()
+    #tick_locator = plt.ticker.MaxNLocator(nbins=5)
+    #cbar.locator = tick_locator
+    #cbar.update_ticks()
     cbar.set_label('$u_{\\textrm{x}}$')
     plt.savefig("strike_slip.png")
     plt.show()
@@ -260,10 +260,10 @@ okada_params = okada_start
 
 nsite = 15
 calc_slip = np.zeros((1, nsite))
-for isite in range(nsite):
-    #site_slip = okadadc3d.calc_SWZR_okada(okada_params, site_neu_posn)
-    site_slip = okadadc3d.test_dc3d()
-    calc_slip[0][isite] = site_slip
+#for isite in range(nsite):
+    #site_slip = calc_SWZR_okada(okada_params, site_neu_posn)
+test_dc3d()
+    #calc_slip[0][isite] = site_slip
 
      
 
