@@ -86,6 +86,13 @@ site_neu_errZ.close()
 
 
 
+
+
+#--------------------------------------------------------------------------
+# Functions 
+#--------------------------------------------------------------------------
+
+
 def okada_SWZR_fit():
     """
     Evaluates the misfit of an okada solution defined by the passed parameters to the slip (and errors) globally defined.
@@ -115,6 +122,23 @@ def okada_SWZR_fit():
     return misfit 
 
 
+
+def calc_SWZR_okada(okada_params, site_neu):
+    """
+    """
+    
+    #result = dtopotools.SubFault().okada(self, site_neu[1] - okada_params[0], site_neu[0] - okada_params[1])
+    
+    success, u, grad_u = dc3dwrapper(0.6, 
+                                     [1.0, 1.0, -1.0],
+                                     3.0, 
+                                     90, 
+                                     [-0.7, 0.7], 
+                                     [-0.7, 0.7],
+                                     [1.0, 0.0, 0.0]
+                                     ) 
+        
+    return success
 
 
   
@@ -173,19 +197,3 @@ def test_dc3d():
     
     
 
-def calc_SWZR_okada(okada_params, site_neu):
-    """
-    """
-    
-    #result = dtopotools.SubFault().okada(self, site_neu[1] - okada_params[0], site_neu[0] - okada_params[1])
-    
-    success, u, grad_u = dc3dwrapper(0.6, 
-                                     [1.0, 1.0, -1.0],
-                                     3.0, 
-                                     90, 
-                                     [-0.7, 0.7], 
-                                     [-0.7, 0.7],
-                                     [1.0, 0.0, 0.0]
-                                     ) 
-        
-    return success
