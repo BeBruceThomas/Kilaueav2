@@ -56,7 +56,7 @@ class Geographic():
     
     def d2u(self, lon, lat, zone):
         """
-        problème avec le'attribut zone, pas présent dans la fonction du main 
+        
         """
     
     def from_latlon(self, latitude, longitude, force_zone_number=None):

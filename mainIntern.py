@@ -17,7 +17,8 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-
+# Name variables
+from collections import defaultdict
 
 # Get all the files in the current working directory: optionnal, just to check if the directory is the good one 
 cwd = os.getcwd()
@@ -98,22 +99,78 @@ if __name__ == "__main__":
     #--------------------------------------------------------------------------
     # Cumulative Distance from line.
     #--------------------------------------------------------------------------    
-    
-    # Define line going North (could also do 2 different following sites in general EW)
-    # North line based on k001 latitude
-    
-    
+      
+    line = [0] * coords.nsites
+    name = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66]
 
-
+    # Xcart
+    X = plt.figure()
+    axX = X.add_subplot(111)
     
+    x09 = coords.m2009[1]
+    dx09 = coords.m2009_2017[1]
+    x11 = coords.m2011[1]
+    dx11 = coords.m2011_2017[1]
+       
+    plt.plot(x09, line, linestyle='-', color='g')
+    plt.plot(x09, dx09, marker='+', linestyle='', color='r') 
+    plt.plot(x11, dx11, marker='+',  linestyle='', color='b')
+    
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (x09[i], dx09[i]))
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (x11[i], dx11[i]))
+
+    plt.xlabel('Xcart (m)')
+    plt.ylabel('Cumulative Displacement (m)')
+    plt.legend()
+       
+    # Ycart
+    Y = plt.figure()
+    axY = Y.add_subplot(111)
+    
+    y09 = coords.m2009[2]
+    dy09 = coords.m2009_2017[2]
+    y11 = coords.m2011[2]
+    dy11 = coords.m2011_2017[2]
+       
+    plt.plot(y09, line, linestyle='-', color='g')
+    plt.plot(y09, dy09, marker='+', linestyle='', color='r') 
+    plt.plot(y11, dy11, marker='+',  linestyle='', color='b') 
+    
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (y09[i], dy09[i]))
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (y11[i], dy11[i]))
+    
+    plt.xlabel('Ycart (m)')
+    plt.ylabel('Cumulative Displacement (m)')
+    plt.legend()
+    
+    # Zcart
+    Z = plt.figure()
+    axZ = Z.add_subplot(111)
+    
+    z09 = coords.m2009[3]
+    dz09 = coords.m2009_2017[3]
+    z11 = coords.m2011[3]
+    dz11 = coords.m2011_2017[3]
+    
+    plt.plot(z09, line, linestyle='-', color='g')
+    plt.plot(z09, dz09, marker='+', linestyle='', color='r') 
+    plt.plot(z11, dz11, marker='+',  linestyle='', color='b')
+    
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (z09[i], dz09[i]))
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (z11[i], dz11[i]))
+        
+    plt.xlabel('Zcart (m)')
+    plt.ylabel('Cumulative Displacement (m)')
+    plt.legend()
+    
+    plt.grid()
     plt.show()
     
 
-
-
-    
-    
-    
-    
-    
     
