@@ -11,8 +11,12 @@ Script for the GEOGRAPHIC Class
 
 # Moduls imported
 import math
+import numpy as np
 
 # Global variables
+
+a = 6378137.0
+e2 = 0.006694380022
 
 K0 = 0.9996
 
@@ -53,6 +57,40 @@ class Geographic():
     
     def __init__(self, name):
         self.name = name
+    
+    
+    
+    
+    def cart_to_geo(self,X,Y,Z):
+        """
+        Conversion de coordonées cartésiennes à géographiques après avoir converti les données en cartésiennes
+        
+        Arguments : 
+            - X, Y, Z : coordonnées cartésiennes
+        """
+        
+        f = 1 - math.sqrt(1-e2)
+        
+        rxy = math.sqrt(X**2 + Y**2)
+        r = math.sqrt(X**2 + Y**2 + Z**2)
+        mu = math.atan((Z/rxy)*((1-f) + a*e2/r))
+        
+        num = Z*(1-f) + e2*a *(math.sin(mu))**3
+        denum = (1-f) * (rxy-a * e2 * (math.cos(mu))**3)
+        lat = math.atan(num/denum)
+        
+        lon = 2 * math.atan(Y/(X+rxy))
+        
+        w = math.sqrt(1 - e2*math.sin(lat)**2)
+        h = rxy*math.cos(lat) + Z*math.sin(lat) - a*w
+        
+        lat = (lat*180 / np.pi) % 360
+        lon = (lon*180 / np.pi) % 360
+        
+        return lon,lat,h #h correspond à z c'est la hauteur au-dessus de l'ellipsoïde
+    
+    
+    
     
     def d2u(self, lon, lat, zone):
         """

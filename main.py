@@ -35,7 +35,6 @@ annex = Annex("annex")
 from scripts.geographic import Geographic
 geo = Geographic("geographic")
 
-
 # Choose the path to access data: have to find a solution to change only in the main only or directly emter in the interface 
 path = "/gps/Bruce/Kilaueav2"
 
