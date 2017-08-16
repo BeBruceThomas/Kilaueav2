@@ -103,44 +103,45 @@ if __name__ == "__main__":
     name = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66]
 
     # Absciss     
-    uy09 = coords.m2009u[2]
-    uy11 = coords.m2011u[2]
+    uy03 = coords.m2003u[2]
+    uy06 = coords.m2006u[2]
     
     # Xcart
     X = plt.figure()
     axX = X.add_subplot(111)
        
-    d09 = coords.m2009_2017[1]
-    d11 = coords.m2011_2017[1]
+    d03 = coords.m2003_2017[1]
+    d06 = coords.m2006_2017[1]
        
-    plt.plot(uy09, line, linestyle='-', color='g')
-    plt.plot(uy09, d09, marker='+', linestyle='', color='r') 
-    plt.plot(uy11, d11, marker='+',  linestyle='', color='b')
+    plt.plot(uy03, line, linestyle='-', color='g')
+    plt.plot(uy03, d03, marker='+', linestyle='', color='r') 
+    plt.plot(uy06, d06, marker='+',  linestyle='', color='b')
     
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy09[i], d09[i]))
+        plt.annotate(int(name[i]), (uy03[i], d03[i]))
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy11[i], d11[i]))
-
+        plt.annotate(int(name[i]), (uy06[i], d06[i]))
+    
     plt.xlabel('Uy (m)')
     plt.ylabel('Cumulative Displacement in Ux (m)')
     plt.legend()
-        
+       
+    
     # Ycart
     Y = plt.figure()
     axY = Y.add_subplot(111)   
     
-    d09 = coords.m2009_2017[2]      
-    d11 = coords.m2011_2017[2]
+    d03 = coords.m2003_2017[2]      
+    d06 = coords.m2006_2017[2] 
        
-    plt.plot(uy09, line, linestyle='-', color='g')
-    plt.plot(uy09, d09, marker='+', linestyle='', color='r') 
-    plt.plot(uy11, d11, marker='+',  linestyle='', color='b') 
+    plt.plot(uy03, line, linestyle='-', color='g')
+    plt.plot(uy03, d03, marker='+', linestyle='', color='r') 
+    plt.plot(uy06, d06, marker='+',  linestyle='', color='b') 
     
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy09[i], d09[i]))
+        plt.annotate(int(name[i]), (uy03[i], d03[i]))
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy11[i], d11[i]))
+        plt.annotate(int(name[i]), (uy06[i], d06[i]))
     
     plt.xlabel('Uy (m)')
     plt.ylabel('Cumulative Displacement in Uy (m)')
@@ -151,18 +152,18 @@ if __name__ == "__main__":
     Z = plt.figure()
     axZ = Z.add_subplot(111)
     
-    d09 = coords.m2009_2017[3]
-    d11 = coords.m2011_2017[3]
+    d03 = coords.m2003_2017[3]
+    d06 = coords.m2006_2017[3]
     
-    plt.plot(uy09, line, linestyle='-', color='g')
-    plt.plot(uy09, d09, marker='+', linestyle='', color='r') 
-    plt.plot(uy11, d11, marker='+',  linestyle='', color='b')
+    plt.plot(uy03, line, linestyle='-', color='g')
+    plt.plot(uy03, d03, marker='+', linestyle='', color='r') 
+    plt.plot(uy06, d06, marker='+',  linestyle='', color='b')
     
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy09[i], d09[i]))
+        plt.annotate(int(name[i]), (uy03[i], d03[i]))
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy11[i], d11[i]))
-        
+        plt.annotate(int(name[i]), (uy06[i], d06[i]))
+    
     plt.xlabel('Uy (m)')
     plt.ylabel('Cumulative Displacement in H (m)')
     plt.legend()
