@@ -38,7 +38,7 @@ import coords
 # Main program : all the run is done here
 if __name__ == "__main__":
     
-    """    
+      
     #--------------------------------------------------------------------------
     # View in 3D: color for each year.
     #--------------------------------------------------------------------------    
@@ -53,9 +53,9 @@ if __name__ == "__main__":
     # Loop on each site
     for year in range(coords.len_mYears):                
                        
-        x = coords.mYears[year][1]
-        y = coords.mYears[year][2]
-        z = coords.mYears[year][3]
+        x = coords.mYearsXY[year][1]
+        y = coords.mYearsXY[year][2]
+        z = coords.mYearsZ[year][3]
         
         cmap = mpl.cm.autumn
         ax1.scatter(x, y, z, c=cmap(year / float(coords.len_mYears)), marker='o')
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     ax1.set_ylabel('Y Label')
     ax1.set_zlabel('Z Label')
         
-   
+    """
     #--------------------------------------------------------------------------
     # View in 3D: color for each site.
     #--------------------------------------------------------------------------  
@@ -105,68 +105,151 @@ if __name__ == "__main__":
     # Absciss     
     uy03 = coords.m2003u[2]
     uy06 = coords.m2006u[2]
+    uy09 = coords.m2011u[2]
+    uy11 = coords.m2011u[2]
+    
     
     # Xcart
     X = plt.figure()
     axX = X.add_subplot(111)
        
-    d03 = coords.m2003_2017[1]
-    d06 = coords.m2006_2017[1]
-       
-    plt.plot(uy03, line, linestyle='-', color='g')
-    plt.plot(uy03, d03, marker='+', linestyle='', color='r') 
-    plt.plot(uy06, d06, marker='+',  linestyle='', color='b')
+    d1_03_17 = coords.m2003_2017[1]
+    d1_06_17 = coords.m2006_2017[1]
+    d1_09_17 = coords.m2009_2017[1]
+    d1_11_17 = coords.m2011_2017[1]
+    d1_03_06 = coords.m2003_2006[1]
+    d1_03_11 = coords.m2003_2011[1]
+    d1_06_11 = coords.m2006_2011[1]
     
+    plt.axhline(y=0.0, color='k')
+    plt.axvline(x=2140269.57525397, color='k') # fault in 2
+    plt.axvline(x=2141378.49758047, color='k') # fault in 17
+    """
+    plt.plot(uy03, d1_03_17, marker='+', linestyle='', color='b', label="2017-2003")     
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy03[i], d03[i]))
+        plt.annotate(int(name[i]), (uy03[i], d1_03_17[i]))     
+    plt.plot(uy06, d1_06_17, marker='+',  linestyle='', color='g', label="2017-2006")  
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy06[i], d06[i]))
+        plt.annotate(int(name[i]), (uy06[i], d1_06_17[i]))    
+    """
+    plt.plot(uy03, d1_03_06, marker='+', linestyle='', color='m', label="2006-2003") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy03[i], d1_03_06[i]))    
+    """
+    plt.plot(uy09, d1_09_17, marker='+', linestyle='', color='r', label="2017-2009")     
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy09[i], d1_09_17[i]))    
+    plt.plot(uy11, d1_11_17, marker='+', linestyle='', color='c', label="2017-2011") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy11[i], d1_11_17[i]))    
     
-    plt.xlabel('Uy (m)')
+    plt.plot(uy03, d1_03_11, marker='+', linestyle='', color='y', label="2011-2003") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy03[i], d1_03_11[i]))    
+    plt.plot(uy06, d1_06_11, marker='+', linestyle='', color='k', label="2011-2006") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy06[i], d1_06_11[i]))
+    """
+    plt.xlabel('Uy (m) : South to North')
     plt.ylabel('Cumulative Displacement in Ux (m)')
-    plt.legend()
+    plt.title('Ux')
+    plt.legend(bbox_to_anchor=(1, 1), loc=2, borderaxespad=0.)
        
     
     # Ycart
     Y = plt.figure()
     axY = Y.add_subplot(111)   
     
-    d03 = coords.m2003_2017[2]      
-    d06 = coords.m2006_2017[2] 
+    d2_03_17 = coords.m2003_2017[2]
+    d2_06_17 = coords.m2006_2017[2]
+    d2_09_17 = coords.m2009_2017[2]
+    d2_11_17 = coords.m2011_2017[2]
+    d2_03_06 = coords.m2003_2006[2]
+    d2_03_11 = coords.m2003_2011[2]
+    d2_06_11 = coords.m2006_2011[2]
        
-    plt.plot(uy03, line, linestyle='-', color='g')
-    plt.plot(uy03, d03, marker='+', linestyle='', color='r') 
-    plt.plot(uy06, d06, marker='+',  linestyle='', color='b') 
-    
+    plt.axhline(y=0.0, color='k')
+    plt.axvline(x=2140269.57525397, color='k') # fault in 2
+    plt.axvline(x=2141378.49758047, color='k') # fault in 17
+    """
+    plt.plot(uy03, d2_03_17, marker='+', linestyle='', color='b', label="2017-2003")     
+.    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy03[i], d2_03_17[i]))     
+    plt.plot(uy06, d2_06_17, marker='+',  linestyle='', color='g', label="2017-2006")  
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy03[i], d03[i]))
+        plt.annotate(int(name[i]), (uy06[i], d2_06_17[i]))    
+    """
+    plt.plot(uy03, d2_03_06, marker='+', linestyle='', color='m', label="2006-2003") 
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy06[i], d06[i]))
+        plt.annotate(int(name[i]), (uy03[i], d2_03_06[i]))    
+    """
+    plt.plot(uy09, d2_09_17, marker='+', linestyle='', color='r', label="2017-2009")     
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy09[i], d2_09_17[i]))    
+    plt.plot(uy11, d2_11_17, marker='+', linestyle='', color='c', label="2017-2011") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy11[i], d2_11_17[i]))    
     
-    plt.xlabel('Uy (m)')
+    plt.plot(uy03, d2_03_11, marker='+', linestyle='', color='y', label="2011-2003") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy03[i], d2_03_11[i]))    
+    plt.plot(uy06, d2_06_11, marker='+', linestyle='', color='k', label="2011-2006") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy06[i], d2_06_11[i]))
+    """
+
+    plt.xlabel('Uy (m) : South to North')
     plt.ylabel('Cumulative Displacement in Uy (m)')
-    plt.legend()
+    plt.title('Uy')
+    plt.legend(bbox_to_anchor=(1, 1), loc=2, borderaxespad=0.)
     
     
     # Zcart
     Z = plt.figure()
     axZ = Z.add_subplot(111)
     
-    d03 = coords.m2003_2017[3]
-    d06 = coords.m2006_2017[3]
+    d3_03_17 = coords.m2003_2017[3]
+    d3_06_17 = coords.m2006_2017[3]
+    d3_09_17 = coords.m2009_2017[3]
+    d3_11_17 = coords.m2011_2017[3]
+    d3_03_06 = coords.m2003_2006[3]
+    d3_03_11 = coords.m2003_2011[3]
+    d3_06_11 = coords.m2006_2011[3]
     
-    plt.plot(uy03, line, linestyle='-', color='g')
-    plt.plot(uy03, d03, marker='+', linestyle='', color='r') 
-    plt.plot(uy06, d06, marker='+',  linestyle='', color='b')
-    
+    plt.axhline(y=0.0, color='k')
+    plt.axvline(x=2140269.57525397, color='k') # fault in 2
+    plt.axvline(x=2141378.49758047, color='k') # fault in 17
+    """
+    plt.plot(uy03, d3_03_17, marker='+', linestyle='', color='b', label="20017-2003")     
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy03[i], d03[i]))
+        plt.annotate(int(name[i]), (uy03[i], d3_03_17[i]))     
+    plt.plot(uy06, d3_06_17, marker='+',  linestyle='', color='g', label="2017-2006")  
     for i in range(coords.nsites):
-        plt.annotate(int(name[i]), (uy06[i], d06[i]))
+        plt.annotate(int(name[i]), (uy06[i], d3_06_17[i]))    
+    """
+    plt.plot(uy03, d3_03_06, marker='+', linestyle='', color='m', label="2006-2003") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy03[i], d3_03_06[i]))    
+    """
+    plt.plot(uy09, d3_09_17, marker='+', linestyle='', color='r', label="2017-2009")     
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy09[i], d3_09_17[i]))    
+    plt.plot(uy11, d3_11_17, marker='+', linestyle='', color='c', label="2017-2011") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy11[i], d3_11_17[i]))    
     
-    plt.xlabel('Uy (m)')
+    plt.plot(uy03, d3_03_11, marker='+', linestyle='', color='y', label="2011-2003") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy03[i], d3_03_11[i]))    
+    plt.plot(uy06, d3_06_11, marker='+', linestyle='', color='k', label="2011-2006") 
+    for i in range(coords.nsites):
+        plt.annotate(int(name[i]), (uy06[i], d3_06_11[i]))
+    """
+
+    plt.xlabel('Uy (m) : South to North')
     plt.ylabel('Cumulative Displacement in H (m)')
-    plt.legend()
+    plt.title('Uh')
+    plt.legend(bbox_to_anchor=(1, 1), loc=2, borderaxespad=0.)
     
     
     plt.grid()
