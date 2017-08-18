@@ -31,8 +31,8 @@ from scipy.optimize import minimize
 
 
 # Import of extern moduls 
-from scripts_okada import okadadc3d
-from scripts_okada import test_okada
+#from scripts_okada import okadadc3d
+#from scripts_okada import test_okada
 
 
 # Choose the path to access data 
@@ -104,7 +104,59 @@ site_neu_errZ.close()
 # Functions
 #--------------------------------------------------------------------------
 
+def get_params():
+    """
+    """
+    poisson_ratio = okada_pr[10]
+    mu = 30
+    lmda = (2 * mu * poisson_ratio) / (1 - 2 * poisson_ratio)
+    alpha = (lmda + mu) / (lmda + 2 * mu)
+    
+    x0 = [ okada_pr[0], okada_pr[1], - okada_pr[2] ]
+    depth = okada_pr[2]
+    dip = okada_pr[4]
+    strike_width = [ -okada_pr[5]/2, okada_pr[5]/2 ]
+    dip_width = [ -okada_pr[6]/2, okada_pr[6]/2 ]
+    dislocation = [ okada_pr[7], okada_pr[8], okada_pr[9] ]
+    
+    return alpha, x0, depth, dip, strike_width, dip_width, dislocation
 
+def test_dc3d():
+    """
+    """
+    alpha, x0, depth, dip, strike_width, dip_width, dislocation = get_params()
+    n = [100, 100]
+    x = np.linspace(lower_bounds[0], upper_bounds[0], n[0])
+    y = np.linspace(lower_bounds[1], upper_bounds[1], n[1])
+    ux = np.zeros((n[0], n[1]))
+    for i in range(n[0]):
+        for j in range(n[1]):
+            success, u, grad_u = dc3dwrapper(alpha, 
+                                             [x[i], y[j], - 1.0],
+                                             depth, 
+                                             dip,
+                                             strike_width, 
+                                             dip_width,
+                                             dislocation
+                                            )
+            assert(success == 0)
+            ux[i, j] = u[0]
+
+    levels = np.linspace(-0.5, 0.5, 21)
+    cntrf = plt.contourf(x, y, ux.T, levels = levels)
+    plt.contour(x, y, ux.T, colors = 'k', levels = levels, linestyles = 'solid')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    cbar = plt.colorbar(cntrf)
+    #tick_locator = plt.ticker.MaxNLocator(nbins=5)
+    #cbar.locator = tick_locator
+    cbar.update_ticks()
+    cbar.set_label('$u_{\\textrm{x}}$')
+    #plt.savefig("strike_slip.png")
+    plt.show()
+    
+    
+    
 def okada_SWZR_fit():
     """
     Evaluates the misfit of an okada solution defined by the passed parameters to the slip (and errors) globally defined.
@@ -154,56 +206,7 @@ def calc_SWZR_okada(okada_params, site_neu):
 
 
   
-def get_params():
-    """
-    """
-    poisson_ratio = okada_start[10]
-    mu = 30
-    lmda = (2 * mu * poisson_ratio) / (1 - 2 * poisson_ratio)
-    alpha = (lmda + mu) / (lmda + 2 * mu)
-    
-    x0 = [ okada_start[0], okada_start[1], - okada_start[2] ]
-    depth = okada_start[2]
-    dip = okada_start[4]
-    strike_width = [ -okada_start[5]/2, okada_start[5]/2 ]
-    dip_width = [ -okada_start[6]/2, okada_start[6]/2 ]
-    dislocation = [ okada_start[7], okada_start[8], okada_start[9] ]
-    
-    return alpha, x0, depth, dip, strike_width, dip_width, dislocation
 
-def test_dc3d():
-    """
-    """
-    alpha, x0, depth, dip, strike_width, dip_width, dislocation = get_params()
-    n = [100, 100]
-    x = np.linspace(lower_bounds[0], upper_bounds[0], n[0])
-    y = np.linspace(lower_bounds[1], upper_bounds[1], n[1])
-    ux = np.zeros((n[0], n[1]))
-    for i in range(n[0]):
-        for j in range(n[1]):
-            success, u, grad_u = dc3dwrapper(alpha, 
-                                             [x[i], y[j], - 1.0],
-                                             depth, 
-                                             dip,
-                                             strike_width, 
-                                             dip_width,
-                                             dislocation
-                                            )
-            assert(success == 0)
-            ux[i, j] = u[0]
-
-    levels = np.linspace(-0.5, 0.5, 21)
-    cntrf = plt.contourf(x, y, ux.T, levels = levels)
-    plt.contour(x, y, ux.T, colors = 'k', levels = levels, linestyles = 'solid')
-    plt.xlabel('x')
-    plt.ylabel('y')
-    cbar = plt.colorbar(cntrf)
-    #tick_locator = plt.ticker.MaxNLocator(nbins=5)
-    #cbar.locator = tick_locator
-    #cbar.update_ticks()
-    cbar.set_label('$u_{\\textrm{x}}$')
-    plt.savefig("strike_slip.png")
-    plt.show()
     
     
 
@@ -216,18 +219,21 @@ def test_dc3d():
 
 upper_boundsA = dataForOkada.okada_initial_params[0]
 okada_startA  = dataForOkada.okada_initial_params[1]
-lower_boundsA = dataForOkada.okada_initial_params[2]
+lower_boundsA = dataForOkada.okada_initial_params[3]
+okada_prA = dataForOkada.okada_initial_params[2]
 
-len_bounds = len(okada_startA)
+len_bounds = len(okada_prA)
 
 upper_bounds = np.zeros(len_bounds)
 okada_start = np.zeros(len_bounds)
 lower_bounds = np.zeros(len_bounds)
+okada_pr = np.zeros(len_bounds)
 
 for i in range(len_bounds):
     upper_bounds[i] = upper_boundsA[i]
     okada_start[i] = okada_startA[i]
     lower_bounds[i] = lower_boundsA[i]
+    okada_pr[i] = okada_prA[i]
 
 """
 # Create a sample fault and print out some information about it: use of CLAWPACK version for Okada.
@@ -255,7 +261,7 @@ if not sol.success:
 okada_params = sol.x   
 """
 
-okada_params = okada_start
+okada_params = okada_pr
 
 
 nsite = 15

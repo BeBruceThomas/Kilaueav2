@@ -8,6 +8,7 @@ Kilauea_Project
 """
 Script for the GPS data for each year.
 You will have to change the PATHS to data (excel or txt) !  
+Could be done automatic.
 """
 
 import os
@@ -389,68 +390,68 @@ array([[ id site ...],
 """
 
 # Define matrix of years 
-m2003_2017 = np.empty((4,nsites))
-m2003_2017[:] = np.NAN
-m2006_2017 = np.empty((4,nsites))
-m2006_2017[:] = np.NAN
-m2009_2017 = np.empty((4,nsites))
-m2009_2017[:] = np.NAN
-m2011_2017 = np.empty((4,nsites))
-m2011_2017[:] = np.NAN
-m2003_2006 = np.empty((4,nsites))
-m2003_2006[:] = np.NAN
-m2003_2011 = np.empty((4,nsites))
-m2003_2011[:] = np.NAN
-m2006_2011 = np.empty((4,nsites))
-m2006_2011[:] = np.NAN
+m2017_2003 = np.empty((4,nsites))
+m2017_2003[:] = np.NAN
+m2017_2006 = np.empty((4,nsites))
+m2017_2006[:] = np.NAN
+m2017_2009 = np.empty((4,nsites))
+m2017_2009[:] = np.NAN
+m2017_2011 = np.empty((4,nsites))
+m2017_2011[:] = np.NAN
+m2006_2003 = np.empty((4,nsites))
+m2006_2003[:] = np.NAN
+m2011_2003 = np.empty((4,nsites))
+m2011_2003[:] = np.NAN
+m2011_2006 = np.empty((4,nsites))
+m2011_2006[:] = np.NAN
 
 # Loop on each site
 for site in range(1, nsites+1):
     # First lien for id sites
-    m2003_2017[0][site-1] = site
-    m2006_2017[0][site-1] = site
-    m2009_2017[0][site-1] = site
-    m2011_2017[0][site-1] = site
-    m2003_2006[0][site-1] = site
-    m2003_2011[0][site-1] = site
-    m2006_2011[0][site-1] = site
+    m2017_2003[0][site-1] = site
+    m2017_2006[0][site-1] = site
+    m2017_2009[0][site-1] = site
+    m2017_2011[0][site-1] = site
+    m2006_2003[0][site-1] = site
+    m2011_2003[0][site-1] = site
+    m2011_2006[0][site-1] = site
     # Test to know which year of start 
     if se['se_%02d' % site][1][0] != 'nan' and se['se_%02d' % site][1][-1] != 'nan':
-        # m2003_2017
-        m2003_2017[1][site-1] = - se['se_%02d' % site][1][0] + se['se_%02d' % site][1][-1]
-        m2003_2017[2][site-1] = - se['se_%02d' % site][2][0] + se['se_%02d' % site][2][-1]
-        m2003_2017[3][site-1] = - se['se_%02d' % site][3][0] + se['se_%02d' % site][3][-1]
+        # m2017_2003
+        m2017_2003[1][site-1] = - se['se_%02d' % site][1][0] + se['se_%02d' % site][1][-1]
+        m2017_2003[2][site-1] = - se['se_%02d' % site][2][0] + se['se_%02d' % site][2][-1]
+        m2017_2003[3][site-1] = - se['se_%02d' % site][3][0] + se['se_%02d' % site][3][-1]    
     if se['se_%02d' % site][1][2] != 'nan' and se['se_%02d' % site][1][-1] != 'nan':
-        # m2006_2017
-        m2006_2017[1][site-1] = - se['se_%02d' % site][1][2] + se['se_%02d' % site][1][-1]
-        m2006_2017[2][site-1] = - se['se_%02d' % site][2][2] + se['se_%02d' % site][2][-1]
-        m2006_2017[3][site-1] = - se['se_%02d' % site][3][2] + se['se_%02d' % site][3][-1] 
+        # m2017_2006
+        m2017_2006[1][site-1] = - se['se_%02d' % site][1][2] + se['se_%02d' % site][1][-1]
+        m2017_2006[2][site-1] = - se['se_%02d' % site][2][2] + se['se_%02d' % site][2][-1]
+        m2017_2006[3][site-1] = - se['se_%02d' % site][3][2] + se['se_%02d' % site][3][-1] 
     if se['se_%02d' % site][1][5] != 'nan' and se['se_%02d' % site][1][-1] != 'nan':
-        # m2009_2017
-        m2009_2017[1][site-1] = - se['se_%02d' % site][1][5] + se['se_%02d' % site][1][-1]
-        m2009_2017[2][site-1] = - se['se_%02d' % site][2][5] + se['se_%02d' % site][2][-1]
-        m2009_2017[3][site-1] = - se['se_%02d' % site][3][5] + se['se_%02d' % site][3][-1] 
+        # m2017_2009
+        m2017_2009[1][site-1] = - se['se_%02d' % site][1][5] + se['se_%02d' % site][1][-1]
+        m2017_2009[2][site-1] = - se['se_%02d' % site][2][5] + se['se_%02d' % site][2][-1]
+        m2017_2009[3][site-1] = - se['se_%02d' % site][3][5] + se['se_%02d' % site][3][-1] 
     if se['se_%02d' % site][1][6] != 'nan' and se['se_%02d' % site][1][-1] != 'nan':
-        # m2011_2017
-        m2011_2017[1][site-1] = - se['se_%02d' % site][1][6] + se['se_%02d' % site][1][-1]
-        m2011_2017[2][site-1] = - se['se_%02d' % site][2][6] + se['se_%02d' % site][2][-1]
-        m2011_2017[3][site-1] = - se['se_%02d' % site][3][6] + se['se_%02d' % site][3][-1] 
+        # m2017_2011
+        m2017_2011[1][site-1] = - se['se_%02d' % site][1][6] + se['se_%02d' % site][1][-1]
+        m2017_2011[2][site-1] = - se['se_%02d' % site][2][6] + se['se_%02d' % site][2][-1]
+        m2017_2011[3][site-1] = - se['se_%02d' % site][3][6] + se['se_%02d' % site][3][-1] 
     if se['se_%02d' % site][1][0] != 'nan' and se['se_%02d' % site][1][2] != 'nan':
-        # m2003_2006
-        m2003_2006[1][site-1] = - se['se_%02d' % site][1][0] + se['se_%02d' % site][1][2]
-        m2003_2006[2][site-1] = - se['se_%02d' % site][2][0] + se['se_%02d' % site][2][2]
-        m2003_2006[3][site-1] = - se['se_%02d' % site][3][0] + se['se_%02d' % site][3][2] 
+        # m2006_2003
+        m2006_2003[1][site-1] = - se['se_%02d' % site][1][0] + se['se_%02d' % site][1][2]
+        m2006_2003[2][site-1] = - se['se_%02d' % site][2][0] + se['se_%02d' % site][2][2]
+        m2006_2003[3][site-1] = - se['se_%02d' % site][3][0] + se['se_%02d' % site][3][2] 
     if se['se_%02d' % site][1][0] != 'nan' and se['se_%02d' % site][1][6] != 'nan':
-        # m2003_2011
-        m2003_2011[1][site-1] = - se['se_%02d' % site][1][0] + se['se_%02d' % site][1][6]
-        m2003_2011[2][site-1] = - se['se_%02d' % site][2][0] + se['se_%02d' % site][2][6]
-        m2003_2011[3][site-1] = - se['se_%02d' % site][3][0] + se['se_%02d' % site][3][6] 
+        # m2011_2003
+        m2011_2003[1][site-1] = - se['se_%02d' % site][1][0] + se['se_%02d' % site][1][6]
+        m2011_2003[2][site-1] = - se['se_%02d' % site][2][0] + se['se_%02d' % site][2][6]
+        m2011_2003[3][site-1] = - se['se_%02d' % site][3][0] + se['se_%02d' % site][3][6] 
     if se['se_%02d' % site][1][2] != 'nan' and se['se_%02d' % site][1][6] != 'nan':
-        # m2006_2011
-        m2006_2011[1][site-1] = - se['se_%02d' % site][1][2] + se['se_%02d' % site][1][6]
-        m2006_2011[2][site-1] = - se['se_%02d' % site][2][2] + se['se_%02d' % site][2][6]
-        m2006_2011[3][site-1] = - se['se_%02d' % site][3][2] + se['se_%02d' % site][3][6] 
+        # m2011_2006
+        m2011_2006[1][site-1] = - se['se_%02d' % site][1][2] + se['se_%02d' % site][1][6]
+        m2011_2006[2][site-1] = - se['se_%02d' % site][2][2] + se['se_%02d' % site][2][6]
+        m2011_2006[3][site-1] = - se['se_%02d' % site][3][2] + se['se_%02d' % site][3][6] 
     # else, we let nan 
 
 
-#print(m2003_2017)
+#print(m2017_2003)

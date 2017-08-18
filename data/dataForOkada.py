@@ -19,19 +19,24 @@ path = "/gps/Bruce/Kilaueav2/data/dataForOkada"
 
 
 
-okada_initial_params = np.zeros((3, 11))
-
-okada_start = open(path+"/okada_start.txt", "r")
-for i in range(11):
-    okada_initial_params[1][i] = okada_start.readline()
-okada_start.close()
+okada_initial_params = np.zeros((4, 11))
 
 upper_bounds = open(path+"/upper_bounds.txt", "r")
 for i in range(11):
     okada_initial_params[0][i] = upper_bounds.readline()
 upper_bounds.close()
 
+okada_start = open(path+"/okada_start.txt", "r")
+for i in range(11):
+    okada_initial_params[1][i] = okada_start.readline()
+okada_start.close()
+
+okada_pr = open(path+"/okada_pr.txt", "r")
+for i in range(11):
+    okada_initial_params[2][i] = okada_pr.readline()
+okada_pr.close()
+
 lower_bounds = open(path+"/lower_bounds.txt", "r")
 for i in range(11):
-    okada_initial_params[2][i] = lower_bounds.readline()
+    okada_initial_params[3][i] = lower_bounds.readline()
 lower_bounds.close()
