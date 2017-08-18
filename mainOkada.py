@@ -112,7 +112,7 @@ def get_params():
     lmda = (2 * mu * poisson_ratio) / (1 - 2 * poisson_ratio)
     alpha = (lmda + mu) / (lmda + 2 * mu)
     
-    x0 = [ okada_pr[0], okada_pr[1], - okada_pr[2] ]
+    x0 = [ okada_start[0], okada_pr[1], - okada_pr[2] ]
     depth = okada_pr[2]
     dip = okada_pr[4]
     strike_width = [ -okada_pr[5]/2, okada_pr[5]/2 ]
@@ -147,13 +147,15 @@ def test_dc3d():
     plt.contour(x, y, ux.T, colors = 'k', levels = levels, linestyles = 'solid')
     plt.xlabel('x')
     plt.ylabel('y')
+    print('gazou')
     cbar = plt.colorbar(cntrf)
     #tick_locator = plt.ticker.MaxNLocator(nbins=5)
     #cbar.locator = tick_locator
-    cbar.update_ticks()
-    cbar.set_label('$u_{\\textrm{x}}$')
+    #cbar.update_ticks()
+    #cbar.set_label('$u_{\\textrm{x}}$')
     #plt.savefig("strike_slip.png")
     plt.show()
+    print('gazou2')
     
     
     
