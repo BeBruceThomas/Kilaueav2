@@ -30,7 +30,6 @@ print("Files in '%s': %s" % (cwd, files))
 path = "/gps/Bruce/Kilaueav2"
 
 
-# Load final_vstack_out_pagers_rtv_datenums
 import coords
 # Load BI_linefile
 from data import bi

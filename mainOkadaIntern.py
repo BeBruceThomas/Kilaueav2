@@ -39,11 +39,9 @@ from scipy.optimize import minimize
 path = "/gps/Bruce/Kilaueav2"
 
 os.chdir("/gps/Bruce/Kilaueav2")
+
 # Load dataForOkada
 from data import dataForOkada
-
-
-
 
 #--------------------------------------------------------------------------
 # Fit an Okada : surface deformation due to a finite rectangular source.
@@ -54,56 +52,142 @@ from data import dataForOkada
 # Data
 #--------------------------------------------------------------------------
 
-
-site_neu_posn = np.zeros((3, 15))
-
-site_neu_posnX = open(path+"/data/site_neu/site_neu_posnX.dat", "r")
-for i in range(15):
-    site_neu_posn[0][i] = site_neu_posnX.readline()
-site_neu_posnX.close()
-site_neu_posnY = open(path+"/data/site_neu/site_neu_posnY.dat", "r")
-for i in range(15):
-    site_neu_posn[1][i] = site_neu_posnY.readline()
-site_neu_posnY.close()
-site_neu_posnZ = open(path+"/data/site_neu/site_neu_posnZ.dat", "r")
-for i in range(15):
-    site_neu_posn[2][i] = site_neu_posnZ.readline()
-site_neu_posnZ.close()
-
-site_neu_slip = np.zeros((3, 15))
-
-site_neu_slipX = open(path+"/data/site_neu/site_neu_slipX.dat", "r")
-for i in range(15):
-    site_neu_slip[0][i] = site_neu_slipX.readline()
-site_neu_slipX.close()
-site_neu_slipY = open(path+"/data/site_neu/site_neu_slipY.dat", "r")
-for i in range(15):
-    site_neu_slip[1][i] = site_neu_slipY.readline()
-site_neu_slipY.close()
-site_neu_slipZ = open(path+"/data/site_neu/site_neu_slipZ.dat", "r")
-for i in range(15):
-    site_neu_slip[2][i] = site_neu_slipZ.readline()
-site_neu_slipZ.close()
-
-site_neu_err = np.zeros((3, 15))
-
-site_neu_errX = open(path+"/data/site_neu/site_neu_errX.dat", "r")
-for i in range(15):
-    site_neu_err[0][i] = site_neu_errX.readline()
-site_neu_errX.close()
-site_neu_errY = open(path+"/data/site_neu/site_neu_errY.dat", "r")
-for i in range(15):
-    site_neu_err[1][i] = site_neu_errY.readline()
-site_neu_errY.close()
-site_neu_errZ = open(path+"/data/site_neu/site_neu_errZ.dat", "r")
-for i in range(15):
-    site_neu_err[2][i] = site_neu_errZ.readline()
-site_neu_errZ.close()
-
-print(site_neu_posn)
-
-
-
+m2017u = np.zeros((2, 66))
+"""
+with open(path+'/data/coords/m2017u_xmodif.dat') as f:
+    fdata = [line.rstrip() for line in f]
+with open(path+'/data/coords/m2017u_ymodif.dat') as f:
+    fdata = [line.rstrip() for line in f]
+""""""
+m2017u_x = open(path+"/data/coords/m2017u_xmodif.dat", "r")
+m2017u_y = open(path+"/data/coords/m2017u_ymodif.dat", "r")
+for i in range(66):
+    m2017u[0][i] = m2017u_x.readline()
+    m2017u[1][i] = m2017u_y.readline()
+m2017u_x.close()
+m2017u_y.close()
+"""
+m2017u_x = [261019.167041,
+261000.588192,
+260994.969326,
+261007.658321,
+261020.950818,
+261038.755829,
+260997.989385,
+260966.489602,
+260918.673363,
+260909.620073,
+260891.508984,
+260836.099641,
+260794.310199,
+260781.893628,
+260734.393806,
+260754.390613,
+260763.444555,
+260732.820087,
+260710.466006,
+260650.208959,
+260629.624308,
+260758.705512,
+260584.868601,
+260547.529067,
+260534.991264,
+260523.713494,
+260466.066394,
+260452.258372,
+260426.555554,
+260389.063283,
+260415.347785,
+260379.2597,
+260379.776686,
+260325.460241,
+260308.247749,
+260269.158898,
+260251.228897,
+260191.9983,
+260207.906469,
+260137.975251,
+260038.457103,
+260223.863458,
+260187.793109,
+260914.603357,
+260815.398051,
+260715.22381,
+260622.994437,
+260587.397885,
+260525.161083,
+260507.342749,
+260417.792698,
+260393.564802,
+260399.069952,
+260434.162622,
+260449.13373,
+260458.938316,
+260415.335063,
+260436.310307,
+260419.4299,
+260411.772691]
+m2017u_y = [2140372.66466,
+2140269.57525,
+2140147.84576,
+2140051.00059,
+2140478.18352,
+2140579.56606,
+2140662.30476,
+2140762.95566,
+2140865.98344,
+2140978.89289,
+2141080.16454,
+2141168.98073,
+2141259.56711,
+2141276.59354,
+2141281.14994,
+2141356.13711,
+2141378.49758,
+2141472.42172,
+2141582.17563,
+2141673.24251,
+2141764.6638,
+2141418.6039,
+2141862.27082,
+2141965.4271,
+2142069.84716,
+2142125.87269,
+2142268.23351,
+2142377.86567,
+2142483.67936,
+2142542.34682,
+2142606.66268,
+2142666.2272,
+2142742.77337,
+2142856.08138,
+2142961.71682,
+2143059.2705,
+2143166.53099,
+2143248.39674,
+2143339.44709,
+2143399.44476,
+2143675.37971,
+2143783.5128,
+2143935.42013,
+2139987.28731,
+2139939.72837,
+2139861.02239,
+2139752.77188,
+2139657.99369,
+2139573.46698,
+2139476.15004,
+2139430.56812,
+2139328.47529,
+2139215.2412,
+2139113.97658,
+2138983.4869,
+2138881.08446,
+2138786.42731,
+2138684.755,
+2138585.40038,
+2138491.50559
+]
 # Functions
 #--------------------------------------------------------------------------
 
@@ -156,54 +240,14 @@ def get_params():
     return alpha, x0, depth, dip, strike_width, dip_width, dislocation
 
 
-def test_dc3d():
-    """
-    """
-    alpha, x0, depth, dip, strike_width, dip_width, dislocation = get_params()
-    n = [10, 10]
-    x = np.linspace(lower_bounds[0], upper_bounds[0], n[0])
-    print(x)
-    y = np.linspace(lower_bounds[1], upper_bounds[1], n[1])
-    print(y)
-    ux = np.zeros((n[0], n[1]))
-    for i in range(n[0]):
-        for j in range(n[1]):
-            success, u, grad_u = dc3dwrapper(alpha, 
-                                             [x[i], y[j], - 1.0],
-                                             depth, 
-                                             dip,
-                                             strike_width, 
-                                             dip_width,
-                                             dislocation
-                                            )
-            assert(success == 0)
-            ux[i, j] = u[0]
-            #print(u[0])
-
-    levels = np.linspace(-0.5, 0.5, 21)
-    cntrf = plt.contourf(x, y, ux.T, levels = levels)
-    plt.contour(x, y, ux.T, colors = 'k', levels = levels, linestyles = 'solid')
-    plt.xlabel('x')
-    plt.ylabel('y')
-    print('gazou')
-    cbar = plt.colorbar(cntrf)
-    #tick_locator = plt.ticker.MaxNLocator(nbins=5)
-    #cbar.locator = tick_locator
-    #cbar.update_ticks()
-    #cbar.set_label('$u_{\\textrm{x}}$')
-    #plt.savefig("strike_slip.png")
-    plt.show()
-    print('gazou2')
-    
-
 def calc_SWZR_okada():
     """
     """
     alpha, x0, depth, dip, strike_width, dip_width, dislocation = get_params()
-    x = site_neu_posn[0]
+    x = m2017u_x
     n0 = len(x)
     print(x)
-    y = site_neu_posn[1]
+    y = m2017u_y
     n1 = len(y)
     print(y)
     ux = np.zeros((n0, n1))
@@ -254,10 +298,7 @@ def calc_SWZR_okada():
     return success
     """
 
-
-  
-
-    
+ 
     
 
 
@@ -267,32 +308,15 @@ def calc_SWZR_okada():
 
 # Okada parameters
 
-upper_boundsA = dataForOkada.okada_initial_params[0]
-okada_startA  = dataForOkada.okada_initial_params[1]
-lower_boundsA = dataForOkada.okada_initial_params[3]
-okada_prA = dataForOkada.okada_initial_params[2]
+okada_prA = dataForOkada.okada_intern[0]
 
 len_bounds = len(okada_prA)
 
-upper_bounds = np.zeros(len_bounds)
-okada_start = np.zeros(len_bounds)
-lower_bounds = np.zeros(len_bounds)
 okada_pr = np.zeros(len_bounds)
 
 for i in range(len_bounds):
-    upper_bounds[i] = upper_boundsA[i]
-    okada_start[i] = okada_startA[i]
-    lower_bounds[i] = lower_boundsA[i]
     okada_pr[i] = okada_prA[i]
 
-"""
-# Create a sample fault and print out some information about it: use of CLAWPACK version for Okada.
-fault, subfault = okaC.set_params(okada_start)
-print ("This sample fault has %s meter of slip over a %s by %s km patch" % (subfault.slip,subfault.length/1e3,subfault.width/1e3))
-print ("With shear modulus %4.1e Pa the seismic moment is %4.1e" % (subfault.mu, subfault.Mo()))
-print ("   corresponding to an earthquake with moment magnitude %s" % fault.Mw())
-print ("The depth at the top edge of the fault plane is %s km" % (subfault.depth/1e3)) 
-"""
 
 # Fit Okada 
 
@@ -313,15 +337,19 @@ okada_params = sol.x
 
 okada_params = okada_pr
 
-
+"""
 nsite = 15
 calc_slip = np.zeros((1, nsite))
 #for isite in range(nsite):
     #site_slip = calc_SWZR_okada(okada_params, site_neu_posn)
 #test_dc3d()
     #calc_slip[0][isite] = site_slip
+"""
+
 
 calc_SWZR_okada()     
+
+
 
 """
 h_okada_vert=quiver(sitex-x0,sitey-y0,0*stepE',calc_slip(3,:)',1)

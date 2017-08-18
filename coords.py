@@ -307,7 +307,13 @@ for i in range(1, 3):
     for j in range(nsites):
         m2017u[i][j] = m2017[i+9][j]    
 
-
+m2017u_x = open("data/coords/m2017u_x.dat", "w")
+m2017u_y = open("data/coords/m2017u_y.dat", "w")
+for i in range(nsites):
+    m2017u_x.write(str(m2017u[1][i]) + "\n")
+    m2017u_y.write(str(m2017u[2][i]) + "\n")
+m2017u_x.close() 
+m2017u_y.close() 
 
 # other way        
 """
@@ -455,3 +461,5 @@ for site in range(1, nsites+1):
 
 
 #print(m2017_2003)
+
+

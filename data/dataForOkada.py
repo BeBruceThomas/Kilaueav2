@@ -40,3 +40,11 @@ lower_bounds = open(path+"/lower_bounds.txt", "r")
 for i in range(11):
     okada_initial_params[3][i] = lower_bounds.readline()
 lower_bounds.close()
+
+
+okada_intern = np.zeros((1, 11))
+
+okada_prI = open(path+"/okada_prI.txt", "r")
+for i in range(11):
+    okada_intern[0][i] = okada_prI.readline()
+okada_prI.close()
